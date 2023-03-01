@@ -114,7 +114,7 @@ int num;
 while (list.Count < 10)
 {
     Console.WriteLine("Введите число");
-    if (!int.TryParse(Console.ReadLine(), out num))
+    while (!int.TryParse(Console.ReadLine(), out num))
     {
         Console.WriteLine("Не верный ввод.Введите следующее число");
     }
