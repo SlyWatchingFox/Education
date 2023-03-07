@@ -9,7 +9,7 @@ namespace Task2
 {
     internal class Mimimum
     {
-        public int FindMin(params int[] numbers)
+        public int[] FindMin(params int[] numbers)
         {
             int min = int.MaxValue;
             foreach (int i in numbers)
@@ -21,9 +21,10 @@ namespace Task2
             {
                 if (numbers[i] == min) { numbers[i] = 0; }
             }
-                return min;
+            return numbers;
 
         }
+
      
     }
 }

@@ -22,7 +22,10 @@ namespace Task2
         static void Main(string[] args)
         {
             var mimimum = new Mimimum();
-            Console.WriteLine($"{mimimum.FindMin(1,2,3,4)} ");
+            int[] result1 = mimimum.FindMin(5, 3, 6);
+            foreach (int i in result1) { Console.WriteLine(i); }
+           
+            
         }
     }
 }
