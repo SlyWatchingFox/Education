@@ -10,6 +10,7 @@ namespace Calcul
     {
         public static int Check()
         {
+            Console.WriteLine("Введите число");
             int i;
             while (!int.TryParse(Console.ReadLine(), out i))
             {
