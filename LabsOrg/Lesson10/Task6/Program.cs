@@ -21,7 +21,7 @@ namespace Task6
             FillMatrix(matrix, minValue, maxValue);
             Console.WriteLine();
             Console.WriteLine($"Введите номер столбца:");
-            var M = Enter.Check()-1;
+            var M = Enter.Check() - 1;
             int product = 0;
             FindProductOfColumn(matrix, M, product);
 
@@ -47,7 +47,7 @@ namespace Task6
             {
                 for (int j = 0; j < matrix.GetLength(1); j++)
                 {
-                    if (j == M) { product+=matrix[i,j];}
+                    if (j == M) { product += matrix[i, j]; }
                 }
             }
             Console.WriteLine($"Произведение элементов 2-го столбца = {product}");
