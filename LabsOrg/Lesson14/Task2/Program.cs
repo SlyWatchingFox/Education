@@ -41,25 +41,27 @@ namespace Task2
             catch (IOException e) { Console.WriteLine($"Ошибка чтения из файла: {e.Message}"); }
         }
         static int CountLessThanLeft(string path)
-        { 
+        {
             var count = 0;
-            int y = int.MaxValue;
+            int y = int.MinValue;
             try
             {
                 using (var fs = new FileStream(path, FileMode.Open))
-
                 {
                     try
                     {
-                        var br = new BinaryReader(fs, Encoding.ASCII);
-                        if (br.PeekChar() == -1) Console.WriteLine("Пустой файл");
-                        while (br.PeekChar() != -1)
+                        using (var br = new BinaryReader(fs, Encoding.ASCII))
                         {
-                            var x = br.ReadInt32();
-                           
-                            if (x<y)
+                            if (br.PeekChar() == -1) Console.WriteLine("Пустой файл");
+                            while (br.PeekChar() != -1)
                             {
-                                y=x; count++;
+                                var x = br.ReadInt32();
+
+                                if (x < y)
+                                {
+                                    count++;
+                                }
+                                y = x;
                             }
                         }
                     }
@@ -67,7 +69,7 @@ namespace Task2
                 }
             }
             catch (IOException e) { Console.WriteLine($"Ошибка чтения из файла: {e.Message}"); }
-            return count; 
+            return count;
         }
     }
 }
