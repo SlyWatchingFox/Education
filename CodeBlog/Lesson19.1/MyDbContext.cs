@@ -11,6 +11,7 @@ namespace Lesson19._1
     {
         public MyDbContext() : base("DbConectionString")
         {
+
         }
         public DbSet<Group> Groups { get; set; }
         public DbSet<Song> Songs { get; set; }

@@ -12,18 +12,19 @@ namespace Lesson19._1
                 var group1 = new Group()
                 {
                     Name = "Ramstein",
-                    Year = 1994
+                    Year = 19941
                 };
-                var group2 = new Group()
-                {
-                    Name = "Linkin Park",
-                    Year = 1990
-                };
+                //var group2 = new Group()
+                //{
+                //    Name = "Linkin Park",
+                //    Year = 1990
+                //};
                 context.Groups.Add(group1);
-                context.Groups.Add(group2);
+                //context.Groups.Add(group2);
                 context.SaveChanges();
+                Console.WriteLine("sda");
 
-                Console.WriteLine($"{group1.Name}" );
+                //Console.WriteLine($"{group1.Name}" );
             }
         }
     }
