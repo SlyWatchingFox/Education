@@ -6,14 +6,7 @@
         {
             using (var context = new MyDbContext())
             {
-                var Mechanic1 = new Mechanic()
-                {
-                    LastName = "Пупкин",
-                    FirstName = "Вася"
-                };
-                context.Mechanics.Add(Mechanic1);
-                context.SaveChanges();
-
+                context.Database.Create();
                 Console.WriteLine($"bI");
             }
         }
