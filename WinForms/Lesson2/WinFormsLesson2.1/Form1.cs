@@ -21,7 +21,7 @@ namespace WinFormsLesson2._1
 
         private void btnClear_Click(object sender, EventArgs e)
         {
-            listOrder.Items.Clear();    
+            listOrder.Items.Clear();
         }
 
         private void btnOk_Click(object sender, EventArgs e)
@@ -43,7 +43,7 @@ namespace WinFormsLesson2._1
         private void btnAddMenu_Click(object sender, EventArgs e)
         {
             string add = textAddMenu.Text;
-            if(add!=null&& add.Length>0)
+            if (add != null && add.Length > 0)
             {
                 listMenu.Items.Add(add);
             }
@@ -51,7 +51,7 @@ namespace WinFormsLesson2._1
 
         private void textAddMenu_TextChanged(object sender, EventArgs e)
         {
-            
+
         }
 
         private void listMenu_SelectedIndexChanged(object sender, EventArgs e)
@@ -61,7 +61,7 @@ namespace WinFormsLesson2._1
 
         private void listOrder_SelectedIndexChanged(object sender, EventArgs e)
         {
-            
+
 
         }
     }

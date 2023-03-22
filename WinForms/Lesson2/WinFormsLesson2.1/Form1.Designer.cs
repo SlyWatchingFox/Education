@@ -45,11 +45,11 @@
             this.listMenu.Items.AddRange(new object[] {
             "Гусы отжареный (1000 р.)",
             "Мудилы (100 р.)",
-            "ЛГБТ капуста (1120р.)",
+            "ЛГБТ капуста (1120 р.)",
             "Расистская капуста (1488 р.)",
             "Камшот (999 р.)",
             "Суши сухари (23 р.)",
-            "Вглазунья (550р.)"});
+            "Вглазунья (550 р.)"});
             this.listMenu.Location = new System.Drawing.Point(12, 12);
             this.listMenu.Name = "listMenu";
             this.listMenu.Size = new System.Drawing.Size(169, 199);
