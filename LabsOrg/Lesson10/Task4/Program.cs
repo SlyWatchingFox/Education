@@ -12,9 +12,9 @@ namespace Task4
         static void Main(string[] args)
         {
             Console.WriteLine("введите кол-во строк");
-            int rows = Enter.Check();
+            int rows = Int32.Parse(Console.ReadLine());
             Console.WriteLine("введите кол-во столбцов");
-            int columns = Enter.Check();
+            var columns = Int32.Parse(Console.ReadLine());
             int[,] matrix = new int[rows, columns];
             int minValue = -15;
             int maxValue = 15;

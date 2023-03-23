@@ -8,11 +8,11 @@ namespace Calcul
 {
     public class Enter
     {
-        public static int Check()
+        public static double Check()
         {
             Console.WriteLine("Введите число");
-            int i;
-            while (!int.TryParse(Console.ReadLine(), out i))
+            double i;
+            while (!double.TryParse(Console.ReadLine(), out i))
             {
                 Console.WriteLine("Не верный ввод. Повторите");
             }
