@@ -28,7 +28,7 @@ namespace ConsoleApp1
                         }
                         else
                         {
-                            res += Convert.ToDouble(kit[i - 1]) * -1 * Convert.ToDouble(kit[i + 1]);
+                            res += Convert.ToDouble(kit[i - 1])* Convert.ToDouble(kit[i + 1]);
                         }
                     }
                 }
