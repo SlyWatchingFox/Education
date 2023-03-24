@@ -42,8 +42,7 @@ namespace WinFormsLesson3lab2
                 }
                 
             }
-            textDate.Text = DateTime.Now.ToString();
-            textDate.Refresh();
+           
 
         }
 
@@ -57,6 +56,8 @@ namespace WinFormsLesson3lab2
         private void textDate_TextChanged(object sender, EventArgs e)
         {
             this.Text = "sf";
+            textDate.Text = DateTime.Now.ToString();
+            textDate.Refresh();
         }
     }
 }

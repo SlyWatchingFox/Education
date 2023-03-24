@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace FormCalculator
 {
@@ -20,6 +21,7 @@ namespace FormCalculator
         private void btnClear_Click(object sender, EventArgs e)
         {
             textResult.Clear();
+            
         }
         private void btnZero_Click(object sender, EventArgs e)
         {
@@ -104,7 +106,8 @@ namespace FormCalculator
 
         private void btnSquare_Click(object sender, EventArgs e)
         {
-            textResult.Text += "sq(";
+            var result = MathOperations.Main1(textResult.Text);
+            textResult.Text = Math.Sqrt(Convert.ToDouble(result)).ToString();
         }
         private void btnEquals_Click(object sender, EventArgs e)
         {
@@ -114,6 +117,10 @@ namespace FormCalculator
         public void textResult_TextChanged(object sender, EventArgs e)
         {
 
+        }
+        private void btnDick_Click(object sender, EventArgs e)
+        {
+            textResult.Text = textResult.Text.Substring(0, textResult.Text.Length - 1);
         }
     }
 }

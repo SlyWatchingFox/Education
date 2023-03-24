@@ -37,13 +37,16 @@
             // 
             // tabControl1
             // 
+            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl1.Controls.Add(this.UserControlCalculator);
             this.tabControl1.Controls.Add(this.UserControlRGB);
             this.tabControl1.Controls.Add(this.UserControlRestorane);
-            this.tabControl1.Location = new System.Drawing.Point(267, 81);
+            this.tabControl1.Location = new System.Drawing.Point(12, 12);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(415, 301);
+            this.tabControl1.Size = new System.Drawing.Size(705, 554);
             this.tabControl1.TabIndex = 0;
             // 
             // UserControlCalculator
@@ -51,18 +54,18 @@
             this.UserControlCalculator.Location = new System.Drawing.Point(4, 24);
             this.UserControlCalculator.Name = "UserControlCalculator";
             this.UserControlCalculator.Padding = new System.Windows.Forms.Padding(3);
-            this.UserControlCalculator.Size = new System.Drawing.Size(407, 273);
+            this.UserControlCalculator.Size = new System.Drawing.Size(697, 526);
             this.UserControlCalculator.TabIndex = 0;
             this.UserControlCalculator.Text = "Калькулятор";
             this.UserControlCalculator.UseVisualStyleBackColor = true;
-            this.UserControlCalculator.Click += new System.EventHandler(this.tabPage1_Click);
+            this.UserControlCalculator.Click += new System.EventHandler(this.UserControlCalculator_Click);
             // 
             // UserControlRGB
             // 
             this.UserControlRGB.Location = new System.Drawing.Point(4, 24);
             this.UserControlRGB.Name = "UserControlRGB";
             this.UserControlRGB.Padding = new System.Windows.Forms.Padding(3);
-            this.UserControlRGB.Size = new System.Drawing.Size(407, 273);
+            this.UserControlRGB.Size = new System.Drawing.Size(697, 526);
             this.UserControlRGB.TabIndex = 1;
             this.UserControlRGB.Text = "RGB";
             this.UserControlRGB.UseVisualStyleBackColor = true;
@@ -71,7 +74,7 @@
             // 
             this.UserControlRestorane.Location = new System.Drawing.Point(4, 24);
             this.UserControlRestorane.Name = "UserControlRestorane";
-            this.UserControlRestorane.Size = new System.Drawing.Size(407, 273);
+            this.UserControlRestorane.Size = new System.Drawing.Size(697, 526);
             this.UserControlRestorane.TabIndex = 2;
             this.UserControlRestorane.Text = "Ресторан";
             this.UserControlRestorane.UseVisualStyleBackColor = true;
@@ -80,10 +83,11 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(726, 574);
             this.Controls.Add(this.tabControl1);
             this.Name = "TabControl";
             this.Text = "Program";
+            this.Load += new System.EventHandler(this.TabControl_Load);
             this.tabControl1.ResumeLayout(false);
             this.ResumeLayout(false);
 

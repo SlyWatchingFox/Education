@@ -315,6 +315,7 @@
             this.btnDick.TabIndex = 21;
             this.btnDick.Text = ".!.";
             this.btnDick.UseVisualStyleBackColor = true;
+            this.btnDick.Click += new System.EventHandler(this.btnDick_Click);
             // 
             // textResult
             // 
@@ -323,8 +324,6 @@
             this.textResult.Name = "textResult";
             this.textResult.Size = new System.Drawing.Size(378, 38);
             this.textResult.TabIndex = 22;
-            this.textResult.Text = "0";
-            this.textResult.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.textResult.TextChanged += new System.EventHandler(this.textResult_TextChanged);
             // 
             // UserControlCalculator
