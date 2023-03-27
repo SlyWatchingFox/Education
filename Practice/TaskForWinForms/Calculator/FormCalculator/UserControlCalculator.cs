@@ -121,6 +121,7 @@ namespace FormCalculator
         private void btnDick_Click(object sender, EventArgs e)
         {
             textResult.Text = textResult.Text.Substring(0, textResult.Text.Length - 1);
+            //textResult.Text = String.Remove;
         }
     }
 }

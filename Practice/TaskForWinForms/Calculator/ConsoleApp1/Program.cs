@@ -43,7 +43,7 @@ namespace ConsoleApp1
                         }
                     }
 
-                   
+
                     Interest(inskobb);
 
                     Division(inskobb);
