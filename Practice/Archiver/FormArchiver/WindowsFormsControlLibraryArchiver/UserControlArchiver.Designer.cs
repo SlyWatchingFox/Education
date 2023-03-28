@@ -37,6 +37,7 @@
             this.progresBar = new System.Windows.Forms.ProgressBar();
             this.fbd = new System.Windows.Forms.FolderBrowserDialog();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.btnArchive1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // listSelectedFiles
@@ -59,7 +60,7 @@
             // 
             // btnArchive
             // 
-            this.btnArchive.Location = new System.Drawing.Point(309, 201);
+            this.btnArchive.Location = new System.Drawing.Point(309, 236);
             this.btnArchive.Name = "btnArchive";
             this.btnArchive.Size = new System.Drawing.Size(100, 25);
             this.btnArchive.TabIndex = 2;
@@ -100,10 +101,21 @@
             // 
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // btnArchive1
+            // 
+            this.btnArchive1.Location = new System.Drawing.Point(309, 205);
+            this.btnArchive1.Name = "btnArchive1";
+            this.btnArchive1.Size = new System.Drawing.Size(100, 25);
+            this.btnArchive1.TabIndex = 9;
+            this.btnArchive1.Text = "Архивация";
+            this.btnArchive1.UseVisualStyleBackColor = true;
+            this.btnArchive1.Click += new System.EventHandler(this.btnArchive1_Click);
+            // 
             // UserControlArchiver
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.btnArchive1);
             this.Controls.Add(this.progresBar);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.textBoxFolder);
@@ -111,7 +123,7 @@
             this.Controls.Add(this.btnFolder);
             this.Controls.Add(this.listSelectedFiles);
             this.Name = "UserControlArchiver";
-            this.Size = new System.Drawing.Size(418, 236);
+            this.Size = new System.Drawing.Size(420, 261);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -127,5 +139,6 @@
         private System.Windows.Forms.ProgressBar progresBar;
         private System.Windows.Forms.FolderBrowserDialog fbd;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Button btnArchive1;
     }
 }

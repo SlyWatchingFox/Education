@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Archiver\FormArchiver\WindowsFormsControlLibraryArchiver\WindowsFormsControlLibraryArchiver.csproj" />
     <ProjectReference Include="..\Calculator\FormCalculator\FormCalculator.csproj" />
     <ProjectReference Include="..\Menu\FormMenu\FormMenu.csproj" />
     <ProjectReference Include="..\RGB\FormRGB\FormRGB.csproj" />
