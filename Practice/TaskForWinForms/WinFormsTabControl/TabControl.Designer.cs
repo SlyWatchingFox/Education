@@ -64,7 +64,6 @@
             this.UserControlCalculator.TabIndex = 0;
             this.UserControlCalculator.Text = "Калькулятор";
             this.UserControlCalculator.UseVisualStyleBackColor = true;
-            this.UserControlCalculator.Click += new System.EventHandler(this.UserControlCalculator_Click);
             // 
             // tabControl1
             // 
@@ -98,7 +97,6 @@
             this.Controls.Add(this.tabControl1);
             this.Name = "TabControl";
             this.Text = "Program";
-            this.Load += new System.EventHandler(this.TabControl_Load);
             this.tabControl1.ResumeLayout(false);
             this.ResumeLayout(false);
 

@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Lesson26._1
 {
-    [Serializable]
+    [DataContract]
     public class Group
     {
         [NonSerialized]

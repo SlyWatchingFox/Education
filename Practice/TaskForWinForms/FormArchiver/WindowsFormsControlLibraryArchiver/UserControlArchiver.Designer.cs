@@ -28,16 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.listSelectedFiles = new System.Windows.Forms.ListBox();
             this.btnFolder = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.textBoxFolder = new System.Windows.Forms.TextBox();
             this.progresBar = new System.Windows.Forms.ProgressBar();
             this.fbd = new System.Windows.Forms.FolderBrowserDialog();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.btnArchive1 = new System.Windows.Forms.Button();
             this.btnCancle = new System.Windows.Forms.Button();
+            this.statusStrip = new System.Windows.Forms.StatusStrip();
+            this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.statusStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // listSelectedFiles
@@ -47,7 +48,6 @@
             this.listSelectedFiles.Name = "listSelectedFiles";
             this.listSelectedFiles.Size = new System.Drawing.Size(400, 160);
             this.listSelectedFiles.TabIndex = 0;
-            this.listSelectedFiles.SelectedIndexChanged += new System.EventHandler(this.listSelectedFiles_SelectedIndexChanged);
             // 
             // btnFolder
             // 
@@ -108,10 +108,27 @@
             this.btnCancle.UseVisualStyleBackColor = true;
             this.btnCancle.Click += new System.EventHandler(this.btnCancle_Click);
             // 
+            // statusStrip
+            // 
+            this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabel});
+            this.statusStrip.Location = new System.Drawing.Point(0, 266);
+            this.statusStrip.Name = "statusStrip";
+            this.statusStrip.Size = new System.Drawing.Size(419, 22);
+            this.statusStrip.TabIndex = 11;
+            this.statusStrip.Text = "statusStrip1";
+            // 
+            // toolStripStatusLabel
+            // 
+            this.toolStripStatusLabel.Name = "toolStripStatusLabel";
+            this.toolStripStatusLabel.Size = new System.Drawing.Size(118, 17);
+            this.toolStripStatusLabel.Text = "toolStripStatusLabel1";
+            // 
             // UserControlArchiver
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.btnCancle);
             this.Controls.Add(this.btnArchive1);
             this.Controls.Add(this.progresBar);
@@ -120,7 +137,9 @@
             this.Controls.Add(this.btnFolder);
             this.Controls.Add(this.listSelectedFiles);
             this.Name = "UserControlArchiver";
-            this.Size = new System.Drawing.Size(419, 266);
+            this.Size = new System.Drawing.Size(419, 288);
+            this.statusStrip.ResumeLayout(false);
+            this.statusStrip.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -134,8 +153,9 @@
         private System.Windows.Forms.TextBox textBoxFolder;
         private System.Windows.Forms.ProgressBar progresBar;
         private System.Windows.Forms.FolderBrowserDialog fbd;
-        private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Button btnArchive1;
         private System.Windows.Forms.Button btnCancle;
+        private System.Windows.Forms.StatusStrip statusStrip;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel;
     }
 }

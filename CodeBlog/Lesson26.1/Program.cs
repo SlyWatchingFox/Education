@@ -23,6 +23,11 @@ namespace Lesson26._1
                 students.Add(student);
             }
 
+
+
+            //
+            //binFormatter
+            //
             var binFormatter = new BinaryFormatter();
             using (var file = new FileStream("groups.bin", FileMode.OpenOrCreate))
             {
@@ -31,7 +36,7 @@ namespace Lesson26._1
             using (var file = new FileStream("groups.bin", FileMode.OpenOrCreate))
             {
                 var newGroups = binFormatter.Deserialize(file) as List<Group>;
-                if(newGroups!=null)
+                if (newGroups != null)
                 {
                     foreach (var group in newGroups)
                     {
@@ -40,13 +45,28 @@ namespace Lesson26._1
                 }
             }
 
-
-
-
-
-            //var soap = new Soap
-
-
+            //
+            //XMLFormater
+            //
+            var xmlFormatter = new XmlSerializer(typeof(List<Group>));
+            using (var file = new FileStream("groups.xml", FileMode.OpenOrCreate))
+            {
+                xmlFormatter.Serialize(file, groups);
+            }
+            using (var file = new FileStream("groups.xml", FileMode.OpenOrCreate))
+            {
+                var newGroups = xmlFormatter.Deserialize(file) as List<Group>;
+                if (newGroups != null)
+                {
+                    foreach (var group in newGroups)
+                    {
+                        Console.WriteLine(group);
+                    }
+                }
+            }
+            //
+            //JSONFormater
+            //
         }
     }
 }

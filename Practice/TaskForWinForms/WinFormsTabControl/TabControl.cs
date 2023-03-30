@@ -23,14 +23,6 @@ namespace WinFormsTabControl
             tabControl1.TabPages[3].Controls.Add(archiverControl);
         }
 
-        private void TabControl_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void UserControlCalculator_Click(object sender, EventArgs e)
-        {
-
-        }
+        
     }
 }

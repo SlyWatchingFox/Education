@@ -1,18 +1,24 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0-windows</TargetFramework>
-    <Nullable>enable</Nullable>
-    <UseWindowsForms>true</UseWindowsForms>
-    <ImplicitUsings>enable</ImplicitUsings>
+	<OutputType>WinExe</OutputType>
+	<TargetFramework>net6.0-windows</TargetFramework>
+	<Nullable>enable</Nullable>
+	<UseWindowsForms>true</UseWindowsForms>
+	<ImplicitUsings>enable</ImplicitUsings>
+	<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Archiver\FormArchiver\WindowsFormsControlLibraryArchiver\WindowsFormsControlLibraryArchiver.csproj" />
-    <ProjectReference Include="..\Calculator\FormCalculator\FormCalculator.csproj" />
-    <ProjectReference Include="..\Menu\FormMenu\FormMenu.csproj" />
-    <ProjectReference Include="..\RGB\FormRGB\FormRGB.csproj" />
+	<PackageReference Include="System.Text.Json" Version="7.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+	<ProjectReference Include="..\..\Archiver\FormArchiver\WindowsFormsControlLibraryArchiver\WindowsFormsControlLibraryArchiver.csproj" />
+	<ProjectReference Include="..\Calculator\FormCalculator\WindowsFormsControlLibraryCalculator.csproj" />
+	<ProjectReference Include="..\FormArchiver\WindowsFormsControlLibraryArchiver\WindowsFormsControlLibraryArchiver.csproj" />
+	<ProjectReference Include="..\Menu\FormMenu\WindowsFormsControlLibraryRestaurantMenu.csproj" />
+	<ProjectReference Include="..\RGB\FormRGB\WindowsFormsControlLibraryRGB.csproj" />
   </ItemGroup>
 
 </Project>

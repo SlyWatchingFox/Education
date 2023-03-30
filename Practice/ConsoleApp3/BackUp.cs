@@ -128,7 +128,10 @@
 
 
 
-
+//istSelectedFiles.Items.Add(path);
+//listSelectedFiles.Refresh();
+//listSelectedFiles.TopIndex = listSelectedFiles.Items.Count - 1;
+//listSelectedFiles.SelectedIndex = listSelectedFiles.Items.Count - 1;
 
 
 
@@ -148,5 +151,37 @@
 //        //}
 
 
+//    }
+////}
+//using System.IO.Compression;
+
+//private void Compress()
+//{
+//    var directory = new DirectoryInfo(textBoxFolder.Text);
+//    if (directory.Exists)
+//    {
+//        string zipPath = textBoxFolder.Text + $".zip";
+//        FileInfo[] files = directory.GetFiles("*", SearchOption.AllDirectories);
+//        listSelectedFiles.Items.Clear();
+//        progresBar.Maximum = files.Length;
+//        progresBar.Value = 0;
+//        using (FileStream zipFile = File.Open(zipPath, FileMode.OpenOrCreate))
+//        {
+//            using (ZipArchive archive = new ZipArchive(zipFile, ZipArchiveMode.Update))
+//            {
+//                if (!ct.IsCancellationRequested)
+//                {
+//                    for (int i = 0; i < files.Length; i++)
+//                    {
+//                        FileInfo fi = new FileInfo(files[i].FullName);
+//                        var fullPath = files[i].FullName;
+//                        var path = fullPath.Substring(textBoxFolder.Text.Length);
+//                        var fileEntry = CompressAsync(files, archive, i, path);
+//                        progresBar.Value = progresBar.Value + 1;
+//                    }
+//                    MessageBox.Show("Archive Complete");
+//                }
+//            }
+//        }
 //    }
 //}
