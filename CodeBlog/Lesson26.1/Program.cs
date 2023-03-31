@@ -1,4 +1,5 @@
 ﻿using System.Runtime.Serialization.Formatters.Binary;
+using System.Runtime.Serialization.Json;
 using System.Xml.Serialization;
 
 namespace Lesson26._1
@@ -28,45 +29,51 @@ namespace Lesson26._1
             //
             //binFormatter
             //
-            var binFormatter = new BinaryFormatter();
-            using (var file = new FileStream("groups.bin", FileMode.OpenOrCreate))
-            {
-                binFormatter.Serialize(file, groups);
-            }
-            using (var file = new FileStream("groups.bin", FileMode.OpenOrCreate))
-            {
-                var newGroups = binFormatter.Deserialize(file) as List<Group>;
-                if (newGroups != null)
-                {
-                    foreach (var group in newGroups)
-                    {
-                        Console.WriteLine(group);
-                    }
-                }
-            }
+            //var binFormatter = new BinaryFormatter();
+            //using (var file = new FileStream("groups.bin", FileMode.OpenOrCreate))
+            //{
+            //    binFormatter.Serialize(file, groups);
+            //}
+            //using (var file = new FileStream("groups.bin", FileMode.OpenOrCreate))
+            //{
+            //    var newGroups = binFormatter.Deserialize(file) as List<Group>;
+            //    if (newGroups != null)
+            //    {
+            //        foreach (var group in newGroups)
+            //        {
+            //            Console.WriteLine(group);
+            //        }
+            //    }
+            //}
 
             //
             //XMLFormater
             //
-            var xmlFormatter = new XmlSerializer(typeof(List<Group>));
-            using (var file = new FileStream("groups.xml", FileMode.OpenOrCreate))
-            {
-                xmlFormatter.Serialize(file, groups);
-            }
-            using (var file = new FileStream("groups.xml", FileMode.OpenOrCreate))
-            {
-                var newGroups = xmlFormatter.Deserialize(file) as List<Group>;
-                if (newGroups != null)
-                {
-                    foreach (var group in newGroups)
-                    {
-                        Console.WriteLine(group);
-                    }
-                }
-            }
+            //var xmlFormatter = new XmlSerializer(typeof(List<Group>));
+            //using (var file = new FileStream("groups.xml", FileMode.OpenOrCreate))
+            //{
+            //    xmlFormatter.Serialize(file, groups);
+            //}
+            //using (var file = new FileStream("groups.xml", FileMode.OpenOrCreate))
+            //{
+            //    var newGroups = xmlFormatter.Deserialize(file) as List<Group>;
+            //    if (newGroups != null)
+            //    {
+            //        foreach (var group in newGroups)
+            //        {
+            //            Console.WriteLine(group);
+            //        }
+            //    }
+            //}
             //
             //JSONFormater
             //
+
+            var jsonFormatter = new DataContractJsonSerializer(typeof(List<Student>));
+            using (var file = new FileStream("students.json", FileMode.OpenOrCreate))
+            {
+                jsonFormatter.WriteObject(file, students);
+            }
         }
     }
 }

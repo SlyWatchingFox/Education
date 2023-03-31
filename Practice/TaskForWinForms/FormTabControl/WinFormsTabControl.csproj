@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+	<OutputType>WinExe</OutputType>
+	<TargetFramework>net6.0-windows</TargetFramework>
+	<Nullable>enable</Nullable>
+	<UseWindowsForms>true</UseWindowsForms>
+	<ImplicitUsings>enable</ImplicitUsings>
+	<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+  </PropertyGroup>
+
+  <ItemGroup>
+	<PackageReference Include="System.Text.Json" Version="7.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+	<ProjectReference Include="..\ControlArchiver\ControlArchiver.csproj" />
+	<ProjectReference Include="..\ControlCalculator\ControlCalculator.csproj" />
+	<ProjectReference Include="..\ControlMenu\ControlRestaurantMenu.csproj" />
+	<ProjectReference Include="..\ControlRGB\ControlRGB.csproj" />
+  </ItemGroup>
+
+</Project>

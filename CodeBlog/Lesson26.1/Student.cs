@@ -11,10 +11,9 @@ namespace Lesson26._1
     public class Student
     {
         [DataMember]
-        public string Name { get; }
+        public string Name { get; set; }
         [DataMember]
-        public int Age { get; }
-        [DataMember]
+        public int Age { get; set; }
         public Group Group { get; set; }
 
         public Student(string name, int age)
