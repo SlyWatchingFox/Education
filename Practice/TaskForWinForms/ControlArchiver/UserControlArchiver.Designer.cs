@@ -38,6 +38,7 @@
             this.btnCancle = new System.Windows.Forms.Button();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.checkBoxCreateJson = new System.Windows.Forms.CheckBox();
             this.statusStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -124,10 +125,23 @@
             this.toolStripStatusLabel.Size = new System.Drawing.Size(39, 17);
             this.toolStripStatusLabel.Text = "Ready";
             // 
+            // checkBoxCreateJson
+            // 
+            this.checkBoxCreateJson.AutoSize = true;
+            this.checkBoxCreateJson.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.checkBoxCreateJson.Location = new System.Drawing.Point(53, 243);
+            this.checkBoxCreateJson.Name = "checkBoxCreateJson";
+            this.checkBoxCreateJson.Size = new System.Drawing.Size(82, 17);
+            this.checkBoxCreateJson.TabIndex = 12;
+            this.checkBoxCreateJson.Text = "Create .json";
+            this.checkBoxCreateJson.UseVisualStyleBackColor = true;
+            this.checkBoxCreateJson.CheckedChanged += new System.EventHandler(this.checkBoxCreateJson_CheckedChanged);
+            // 
             // UserControlArchiver
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.checkBoxCreateJson);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.btnCancle);
             this.Controls.Add(this.btnArchive1);
@@ -157,5 +171,6 @@
         private System.Windows.Forms.Button btnCancle;
         private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel;
+        private System.Windows.Forms.CheckBox checkBoxCreateJson;
     }
 }

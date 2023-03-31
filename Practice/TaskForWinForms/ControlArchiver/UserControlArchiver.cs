@@ -12,10 +12,9 @@ using System.Threading;
 
 namespace ControlArchiver
 {
-    public partial class UserControlArchiver: UserControl
+    public partial class UserControlArchiver : UserControl
     {
         static CancellationTokenSource cts = new CancellationTokenSource();
-
 
         Archiver archiver = new Archiver();
 
@@ -52,13 +51,16 @@ namespace ControlArchiver
                 MessageBox.Show("Пожалуйста укажите путь для папки с файлами.", "Сообщение", MessageBoxButtons.OK);
                 return;
             }
+            bool checkJson;
+            if (checkBoxCreateJson.Checked) { checkJson = true; }
+            else checkJson = false;
             var directory = new DirectoryInfo(textBoxFolder.Text);
             if (directory.Exists)
             {
                 FileInfo[] files = directory.GetFiles("*", SearchOption.AllDirectories);
                 progresBar.Maximum = files.Length;
                 progresBar.Value = 0;
-                await archiver.Compress(textBoxFolder.Text, files, cts.Token);
+                await archiver.Compress(textBoxFolder.Text, files, cts.Token, checkJson);
                 MessageBox.Show("Archive Complete");
             }
         }
@@ -67,6 +69,11 @@ namespace ControlArchiver
         {
             cts.Cancel();
             cts = new CancellationTokenSource();
+        }
+
+        private void checkBoxCreateJson_CheckedChanged(object sender, EventArgs e)
+        {
+            CheckBox checkBoxCreateJson = (CheckBox)sender;
         }
     }
 }
