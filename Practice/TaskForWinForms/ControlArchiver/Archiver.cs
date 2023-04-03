@@ -37,28 +37,7 @@ namespace ControlArchiver
                 }
             }
             DateTime dateTimeEnd = DateTime.Now;
-            ArchiveInformation archiveInformation = ArchiveInformation(files, sizeFiles, zipPath, 
-                                                                        dateTimeStart, dateTimeEnd);
-            CheckJson(folderPath, checkJson, archiveInformation);
-        }
-
-        private static void CheckJson(string folderPath, bool checkJson, ArchiveInformation archiveInformation)
-        {
-            if (checkJson == true)
-            {
-                string archiveInformationPath = folderPath + $"ArchiveInformation.json";
-                var jsonFormatter = new DataContractJsonSerializer(typeof(List<ArchiveInformation>));
-                using (var file = new FileStream(archiveInformationPath, FileMode.OpenOrCreate))
-                {
-                    jsonFormatter.WriteObject(file, archiveInformation);
-                }
-            }
-        }
-
-        private static ArchiveInformation ArchiveInformation(FileInfo[] files, long sizeFiles,
-                string zipPath, DateTime dateTimeStart, DateTime dateTimeEnd)
-        {
-            return new ArchiveInformation()
+            ArchiveInfo archiveInfo = new ArchiveInfo()
             {
                 DateTimeStart = dateTimeStart.ToString(),
                 DateTimeEnd = dateTimeEnd.ToString(),
@@ -67,6 +46,17 @@ namespace ControlArchiver
                 SizeBeforeArchiving = SizeConver(sizeFiles),
                 SizeAfterArchiving = SizeConver(zipPath)
             };
+            if (checkJson) CheckJson(folderPath, archiveInfo);
+        }
+
+        private static void CheckJson(string folderPath, ArchiveInfo archiveInfo)
+        {
+            string archiveInfoPath = folderPath + $"{nameof(ArchiveInfo)}.json";
+            var jsonFormatter = new DataContractJsonSerializer(typeof(List<ArchiveInfo>));
+            using (var file = new FileStream(archiveInfoPath, FileMode.OpenOrCreate))
+            {
+                jsonFormatter.WriteObject(file, archiveInfo);
+            }
         }
 
         public static string SizeConver(long sizeFiles)
@@ -105,3 +95,4 @@ namespace ControlArchiver
         }
     }
 }
+

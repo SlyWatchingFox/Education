@@ -75,7 +75,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ArchiveInformation.cs" />
+    <Compile Include="ArchiveInfo.cs" />
     <Compile Include="Archiver.cs" />
     <Compile Include="UserControlArchiver.cs">
       <SubType>UserControl</SubType>

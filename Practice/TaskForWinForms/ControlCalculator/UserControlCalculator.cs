@@ -88,8 +88,10 @@ namespace FormCalculator
         }
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            textResult.Text = textResult.Text.Substring(0, textResult.Text.Length - 1);
-            //textResult.Text = String.Remove;
+            if (textResult.Text.Length > 0)
+            {
+                textResult.Text = textResult.Text.Substring(0, textResult.Text.Length - 1);
+            }
         }
     }
 }

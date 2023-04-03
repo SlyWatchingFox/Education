@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ControlArchiver
 {
-    public class ArchiveInformation
+    public class ArchiveInfo
     {
         public string DateTimeStart { get; set; }
         public string DateTimeEnd { get; set; }

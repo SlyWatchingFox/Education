@@ -135,7 +135,6 @@
             this.checkBoxCreateJson.TabIndex = 12;
             this.checkBoxCreateJson.Text = "Create .json";
             this.checkBoxCreateJson.UseVisualStyleBackColor = true;
-            this.checkBoxCreateJson.CheckedChanged += new System.EventHandler(this.checkBoxCreateJson_CheckedChanged);
             // 
             // UserControlArchiver
             // 
