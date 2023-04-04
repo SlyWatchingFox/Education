@@ -8,6 +8,7 @@ namespace FormCalculator
         public UserControlCalculator()
         {
             InitializeComponent();
+            Name = "Калькулятор";
         }
         private void btnClear_Click(object sender, EventArgs e)
         {

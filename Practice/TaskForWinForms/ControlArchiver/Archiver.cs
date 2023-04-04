@@ -19,23 +19,27 @@ namespace ControlArchiver
             long sizeFiles = 0;
             string zipPath = folderPath + $".zip";
             DateTime dateTimeStart = DateTime.Now;
-            using (FileStream zipFile = File.Open(zipPath, FileMode.OpenOrCreate))
+            try
             {
-                using (ZipArchive archive = new ZipArchive(zipFile, ZipArchiveMode.Update))
+                using (FileStream zipFile = File.Open(zipPath, FileMode.OpenOrCreate))
                 {
-                    for (int i = 0; i < files.Length; i++)
+                    using (ZipArchive archive = new ZipArchive(zipFile, ZipArchiveMode.Update))
                     {
-                        if (ct.IsCancellationRequested) return;
-                        var fullPath = files[i].FullName;
-                        var filesPath = fullPath.Substring(folderPath.Length);
-                        ZipArchiveEntry fileEntry = await Task.Run(() =>
-                            archive.CreateEntryFromFile(files[i].FullName, filesPath, CompressionLevel.Optimal));
-                        pBarValue++;
-                        FileCompressed?.Invoke(pBarValue, filesPath);
-                        sizeFiles += files[i].Length;
+                        for (int i = 0; i < files.Length; i++)
+                        {
+                            if (ct.IsCancellationRequested) return;
+                            var fullPath = files[i].FullName;
+                            var filesPath = fullPath.Substring(folderPath.Length);
+                            ZipArchiveEntry fileEntry = await Task.Run(() =>
+                                archive.CreateEntryFromFile(files[i].FullName, filesPath, CompressionLevel.Optimal));
+                            pBarValue++;
+                            FileCompressed?.Invoke(pBarValue, filesPath);
+                            sizeFiles += files[i].Length;
+                        }
                     }
                 }
             }
+            catch (Exception ex) { }
             DateTime dateTimeEnd = DateTime.Now;
             ArchiveInfo archiveInfo = new ArchiveInfo()
             {
@@ -47,52 +51,49 @@ namespace ControlArchiver
                 SizeAfterArchiving = SizeConver(zipPath)
             };
             if (checkJson) CheckJson(folderPath, archiveInfo);
-        }
-
-        private static void CheckJson(string folderPath, ArchiveInfo archiveInfo)
-        {
-            string archiveInfoPath = folderPath + $"{nameof(ArchiveInfo)}.json";
-            var jsonFormatter = new DataContractJsonSerializer(typeof(List<ArchiveInfo>));
-            using (var file = new FileStream(archiveInfoPath, FileMode.OpenOrCreate))
-            {
-                jsonFormatter.WriteObject(file, archiveInfo);
             }
-        }
-
-        public static string SizeConver(long sizeFiles)
-        {
-            string[] sizeletters = new string[] { "bytes", "KB", "MB", "GB", "TB" };
-            for (int i = 0; i < 5; i++)
+            private static void CheckJson(string folderPath, ArchiveInfo archiveInfo)
             {
-                if (sizeFiles < 1024)
+                string archiveInfoPath = folderPath + $"{nameof(ArchiveInfo)}.json";
+                var jsonFormatter = new DataContractJsonSerializer(typeof(List<ArchiveInfo>));
+                using (var file = new FileStream(archiveInfoPath, FileMode.OpenOrCreate))
                 {
-                    string fileSize = sizeFiles.ToString() + sizeletters[i];
-                    return fileSize;
+                    jsonFormatter.WriteObject(file, archiveInfo);
                 }
-                sizeFiles /= 1024;
             }
-            return "";
-        }
-
-        public static string SizeConver(string zipPath)
-        {
-            if (File.Exists(zipPath))
+            public static string SizeConver(long sizeFiles)
             {
-                FileInfo info = new FileInfo(zipPath);
-                long size = info.Length;
                 string[] sizeletters = new string[] { "bytes", "KB", "MB", "GB", "TB" };
                 for (int i = 0; i < 5; i++)
                 {
-                    if (size < 1024)
+                    if (sizeFiles < 1024)
                     {
-                        string fileSize = size.ToString() + sizeletters[i];
+                        string fileSize = sizeFiles.ToString() + sizeletters[i];
                         return fileSize;
                     }
-                    size /= 1024;
+                    sizeFiles /= 1024;
                 }
+                return "";
             }
-            return "";
+            public static string SizeConver(string zipPath)
+            {
+                if (File.Exists(zipPath))
+                {
+                    FileInfo info = new FileInfo(zipPath);
+                    long size = info.Length;
+                    string[] sizeletters = new string[] { "bytes", "KB", "MB", "GB", "TB" };
+                    for (int i = 0; i < 5; i++)
+                    {
+                        if (size < 1024)
+                        {
+                            string fileSize = size.ToString() + sizeletters[i];
+                            return fileSize;
+                        }
+                        size /= 1024;
+                    }
+                }
+                return "";
+            }
         }
     }
-}
 

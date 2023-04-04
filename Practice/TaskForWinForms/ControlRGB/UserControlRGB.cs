@@ -12,6 +12,7 @@ namespace FormRGB
             trackBarRed.Scroll += trackBarRed_Scroll;
             trackBarGreen.Scroll += trackBarGreen_Scroll;
             trackBarBlue.Scroll += trackBarBlue_Scroll;
+            Name = "RGB";
         }
         private void trackBarRed_Scroll(object sender, EventArgs e)
         {

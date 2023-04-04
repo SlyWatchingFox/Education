@@ -5,6 +5,7 @@ namespace FormMenu
 {
     public partial class UserControlMenu : UserControl
     {
+       
         public UserControlMenu()
         {
             InitializeComponent();
@@ -20,6 +21,7 @@ namespace FormMenu
             dataGridMenu.Rows.Add("Суши сухари", "23");
             dataGridMenu.Rows.Add("Вглазунья", "550");
             EditRowsSize();
+            Name = "Ресторан";
         }
 
         private void btnAdd_Click(object sender, EventArgs e)

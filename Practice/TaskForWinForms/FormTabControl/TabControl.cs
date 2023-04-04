@@ -1,7 +1,3 @@
-using ControlArchiver;
-using FormCalculator;
-using FormMenu;
-using FormRGB;
 using System.Reflection;
 
 namespace WinFormsTabControl
@@ -11,40 +7,45 @@ namespace WinFormsTabControl
         public TabControl()
         {
             InitializeComponent();
-            //UserControlCalculator calculatorControl = new UserControlCalculator();
-            //tabControl1.TabPages[0].Controls.Add(calculatorControl);
-
-            //UserControlRGB rgbControl = new UserControlRGB();
-            //tabControl1.TabPages[1].Controls.Add(rgbControl);
-
-            //UserControlMenu menuControl = new UserControlMenu();
-            //tabControl1.TabPages[2].Controls.Add(menuControl);
-
-            //UserControlArchiver archiverControl = new UserControlArchiver();
-            //tabControl1.TabPages[3].Controls.Add(archiverControl);
-
-            var path = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
-            var directory = new DirectoryInfo(path);
-            if (directory != null)
+            LoadPlug();
+        }
+        public void LoadPlug()
+        {
+            try
             {
-                Assembly asmDll;
-                FileInfo[] files = directory.GetFiles("*.dll");
-                var dllList = new List<string>();
-                foreach (FileInfo file in files)
+                var asm = Assembly.GetEntryAssembly();
+                if (asm == null) return;
+                var path = Path.GetDirectoryName(asm.Location);
+                if (path == null) return;
+                var directory = new DirectoryInfo(path);
+                if (directory != null)
                 {
-                    asmDll = Assembly.LoadFrom(file.FullName);
-                    Type[] types = asmDll.GetTypes();
-                    foreach (Type type in types)
+                    Assembly asmDll;
+                    FileInfo[] files = directory.GetFiles("*.dll");
+                    var dllList = new List<string>();
+                    foreach (FileInfo file in files)
                     {
-                        if (type == typeof(UserControl))
+                        asmDll = Assembly.LoadFrom(file.FullName);
+                        Type[] types = asmDll.GetTypes();
+                        foreach (Type type in types)
                         {
-                            UserControl uesrControl = (UserControl)Activator.CreateInstance(type);
-                            TabPage tabPage= new TabPage();
-                            //tabPage.Controls.Add(uesrControl);
-                            tabControl1.Controls.Add(uesrControl);
+                            if (type.IsSubclassOf(typeof(UserControl)))
+                            {
+                                var inst = Activator.CreateInstance(type);
+                                if (inst == null) continue;
+                                UserControl userControl = (UserControl)inst;
+                                TabPage tabPage = new TabPage();
+                                tabPage.Text = userControl.Name;
+                                tabPage.Controls.Add(userControl);
+                                tabControl1.TabPages.Add(tabPage);
+                            }
                         }
                     }
                 }
+            }
+            catch(Exception ex) 
+            {
+                MessageBox.Show(ex.Message);
             }
         }
     }

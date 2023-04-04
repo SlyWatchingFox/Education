@@ -15,6 +15,7 @@ namespace ControlArchiver
         {
             InitializeComponent();
             archiver.FileCompressed += DisplayParameters;
+            Name = "Архиватор";
         }
 
         private void DisplayParameters(int pBarValue, string filesPath)
