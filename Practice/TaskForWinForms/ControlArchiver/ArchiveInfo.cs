@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace ControlArchiver
 {
     public class ArchiveInfo
@@ -14,6 +9,22 @@ namespace ControlArchiver
         public int FilesCount { get; set; }
         public string SizeBeforeArchiving { get; set; }
         public string SizeAfterArchiving { get; set; }
-
+        public ArchiveInfo
+            (
+            string dateTimeStart,
+            string dateTimeEnd,
+            string archivingDuration,
+            int filesCount, 
+            string sizeBeforeArchiving, 
+            string sizeAfterArchiving
+            )
+        {
+            DateTimeStart = dateTimeStart;
+            DateTimeEnd = dateTimeEnd;
+            ArchivingDuration = archivingDuration;
+            FilesCount = filesCount;
+            SizeBeforeArchiving = sizeBeforeArchiving;
+            SizeAfterArchiving = sizeAfterArchiving;
+        }
     }
 }

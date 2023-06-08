@@ -41,15 +41,15 @@ namespace ControlArchiver
             }
             catch (Exception ex) { }
             DateTime dateTimeEnd = DateTime.Now;
-            ArchiveInfo archiveInfo = new ArchiveInfo()
-            {
-                DateTimeStart = dateTimeStart.ToString(),
-                DateTimeEnd = dateTimeEnd.ToString(),
-                ArchivingDuration = (dateTimeEnd - dateTimeStart).ToString(),
-                FilesCount = files.Length,
-                SizeBeforeArchiving = SizeConver(sizeFiles),
-                SizeAfterArchiving = SizeConver(zipPath)
-            };
+            ArchiveInfo archiveInfo = new ArchiveInfo
+            (
+                dateTimeStart.ToString(),
+                dateTimeEnd.ToString(),
+                (dateTimeEnd - dateTimeStart).ToString(),
+                files.Length,
+                SizeConver(sizeFiles),
+                SizeConver(zipPath)
+            );
             if (checkJson) CheckJson(folderPath, archiveInfo);
             }
             private static void CheckJson(string folderPath, ArchiveInfo archiveInfo)

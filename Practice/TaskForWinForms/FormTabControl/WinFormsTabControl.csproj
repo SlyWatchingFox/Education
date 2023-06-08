@@ -18,6 +18,7 @@
 	<ProjectReference Include="..\ControlCalculator\ControlCalculator.csproj" />
 	<ProjectReference Include="..\ControlMenu\ControlRestaurantMenu.csproj" />
 	<ProjectReference Include="..\ControlRGB\ControlRGB.csproj" />
+	<ProjectReference Include="..\ControlSearch\ControlSearch.csproj" />
   </ItemGroup>
 
 </Project>
