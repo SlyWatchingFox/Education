@@ -1,6 +1,8 @@
 ﻿using System;
 using System.IO;
 using System.Text.RegularExpressions;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using ControlSearch.Properties;
 
@@ -8,18 +10,16 @@ namespace ControlSearch
 {
     public partial class UserControlSearch : UserControl
     {
-
+        static CancellationTokenSource cts = new CancellationTokenSource();
         public UserControlSearch()
         {
             InitializeComponent();
             textBoxFolder.Text = Settings.Default["Path"].ToString();
             textBoxRegex.Text = Settings.Default["Regex"].ToString();
-            //treeViewSearch.BeforeSelect += treeViewSearch_BeforeSelect;
-            treeViewSearch.BeforeExpand += treeViewSearch_BeforeExpand;
             Name = "Поиск";
         }
-        int allCount = 0;
-        int searchCount = 0;
+        private int _allCount = 0;
+        private int _searchCount = 0;
 
 
 
@@ -29,13 +29,13 @@ namespace ControlSearch
 
 
 
-        private void BtnSearch_Click(object sender, EventArgs e)
+        private void btnSearch_Click(object sender, EventArgs e)
         {
             FillSearchNodes();
-            textBoxAllCount.Text = allCount.ToString();
-            textBoxSearchCount.Text = searchCount.ToString();
-            allCount = 0;
-            searchCount = 0;
+            textBoxAllCount.Text = _allCount.ToString();
+            textBoxSearchCount.Text = _searchCount.ToString();
+            _allCount = 0;
+            _searchCount = 0;
             Settings.Default["Path"] = textBoxFolder.Text;
             Settings.Default["Regex"] = textBoxRegex.Text;
             Settings.Default.Save();
@@ -47,48 +47,11 @@ namespace ControlSearch
                 textBoxFolder.Text = fbd.SelectedPath;
             }
         }
-
-
-
-
-
-
-
-
-        private async void treeViewSearch_BeforeExpand(object sender, TreeViewCancelEventArgs e)
+        private void btnStop_Click(object sender, EventArgs e)
         {
-            e.Node.Nodes.Clear();
-            string[] dirs;
-            try
-            {
-                if (Directory.Exists(e.Node.FullPath))
-                {
-
-                    //dirs = Directory.GetFileSystemEntries(e.Node.FullPath);
-                    dirs = Directory.GetFiles(e.Node.FullPath, "*", SearchOption.AllDirectories);
-                    if (dirs.Length != 0)
-                    {
-                        for (int i = 0; i < dirs.Length; i++)
-                        {
-                            TreeNode dirNode = new TreeNode(new DirectoryInfo(dirs[i]).Name);
-                            FillTreeNode(dirNode, dirs[i]);
-                            if (Regex.IsMatch(dirs[i], textBoxRegex.Text))
-                            {
-                                
-                                e.Node.Nodes.Add(dirNode);
-                            }
-
-                        }
-                    }
-                }
-            }
-            catch (Exception ex) { }
+            cts.Cancel();
+            cts = new CancellationTokenSource();
         }
-
-
-
-
-
 
 
 
@@ -100,111 +63,59 @@ namespace ControlSearch
                 string[] dirs = Directory.GetFiles(path, "*", SearchOption.AllDirectories);
                 for (int i = 0; i < dirs.Length; i++)
                 {
-                    allCount++;
                     if (Regex.IsMatch(dirs[i], textBoxRegex.Text))
                     {
-                        searchCount++;
                         TreeNode dirNode = new TreeNode();
                         dirNode.Text = dirs[i].Remove(0, dirs[i].LastIndexOf("\\") + 1);
                         searchNode.Nodes.Add(dirNode);
                     }
                 }
             }
-            catch (Exception ex) { }
+            catch (Exception ex) {}
         }
-        private void FillSearchNodes()
+        private async void FillSearchNodes()
         {
             try
             {
                 TreeNode searchNode = new TreeNode { Text = textBoxFolder.Text };
                 FillTreeNode(searchNode, textBoxFolder.Text);
                 treeViewSearch.Nodes.Add(searchNode);
+                searchNode.Nodes.Clear();
+                await Task.Run(() => TreeView(searchNode));
             }
             catch (Exception ex) { }
         }
 
-
-
-
-
-
-
-
-
-
-
-        //void treeViewSearch_BeforeExpand(object sender, TreeViewCancelEventArgs e)
-        //{
-        //    e.Node.Nodes.Clear();
-        //    string[] dirs;
-        //    try
-        //    {
-        //        if (Directory.Exists(e.Node.FullPath))
-        //        {
-        //            dirs = Directory.GetFiles(e.Node.FullPath, "*", SearchOption.AllDirectories);
-        //            if (dirs.Length != 0)
-        //            {
-        //                for (int i = 0; i < dirs.Length; i++)
-        //                {
-
-        //                    TreeNode dirNode = new TreeNode(new DirectoryInfo(dirs[i]).Name);
-        //                    FillTreeNode(dirNode, dirs[i]);
-        //                    e.Node.Nodes.Add(dirNode);
-
-        //                }
-        //            }
-        //        }
-        //    }
-        //    catch (Exception ex) { }
-        //}
-
-
-
-
-
-        //private void FillTreeNode2(TreeNode searchNode, string path)
-        //{
-        //    try
-        //    {
-        //        string[] dirs = Directory.GetDirectories(path);
-        //        foreach (string dir in dirs)
-        //        {
-        //            TreeNode dirNode = new TreeNode();
-        //            dirNode.Text = dir.Remove(0, dir.LastIndexOf("\\") + 1);
-        //            searchNode.Nodes.Add(dirNode);
-        //        }
-        //    }
-        //    catch (Exception ex) { }
-        //}
-
-
-
-
-        //void treeViewSearch_BeforeSelect(object sender, TreeViewCancelEventArgs e)
-        //{
-        //    e.Node.Nodes.Clear();
-        //    string[] dirs;
-        //    try
-        //    {
-        //        if (Directory.Exists(e.Node.FullPath))
-        //        {
-        //            dirs = Directory.GetFiles(e.Node.FullPath, "*", SearchOption.AllDirectories);
-        //            if (dirs.Length != 0)
-        //            {
-        //                for (int i = 0; i < dirs.Length; i++)
-        //                {
-        //                    if (Regex.IsMatch(dirs[i], textBoxRegex.Text))
-        //                    {
-        //                        TreeNode dirNode = new TreeNode(new DirectoryInfo(dirs[i]).Name);
-        //                        FillTreeNode2(dirNode, dirs[i]);
-        //                        e.Node.Nodes.Add(dirNode);
-        //                    }
-        //                }
-        //            }
-        //        }
-        //    }
-        //    catch (Exception ex) { }
-        //}
-
+        private async void TreeView(TreeNode searchNode)
+        {
+            string[] dirs;
+            DateTime dateTimeStart = DateTime.Now;
+            if (Directory.Exists(searchNode.FullPath))
+            {
+                dirs = Directory.GetFileSystemEntries(searchNode.FullPath, "*", SearchOption.AllDirectories);
+                if (dirs.Length != 0)
+                {
+                    for (int i = 0; i < dirs.Length; i++)
+                    {
+                        if (cts.IsCancellationRequested) return;
+                        _allCount++;
+                        TreeNode dirNode = new TreeNode(new DirectoryInfo(dirs[i]).Name);
+                        FillTreeNode(dirNode, dirs[i]);
+                        if (Regex.IsMatch(dirs[i], textBoxRegex.Text))
+                        {
+                            treeViewSearch.BeginInvoke((Action)(() => searchNode.Nodes.Add(dirNode)));
+                            _searchCount++;
+                        }
+                    }
+                }
+            }
+            DateTime dateTimeEnd = DateTime.Now;
+            treeViewSearch.BeginInvoke((Action)(() =>
+            {
+                textBoxTime.Text = (dateTimeEnd - dateTimeStart).ToString();
+                textBoxAllCount.Text = _allCount.ToString();
+                textBoxSearchCount.Text = _searchCount.ToString();
+            }));
+        }
     }
 }

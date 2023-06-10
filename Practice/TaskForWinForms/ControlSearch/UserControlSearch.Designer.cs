@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.BtnSearch = new System.Windows.Forms.Button();
+            this.btnSearch = new System.Windows.Forms.Button();
             this.fbd = new System.Windows.Forms.FolderBrowserDialog();
             this.textBoxRegex = new System.Windows.Forms.TextBox();
             this.textBoxFolder = new System.Windows.Forms.TextBox();
@@ -36,17 +36,19 @@
             this.btnFolder = new System.Windows.Forms.Button();
             this.textBoxAllCount = new System.Windows.Forms.TextBox();
             this.textBoxSearchCount = new System.Windows.Forms.TextBox();
+            this.textBoxTime = new System.Windows.Forms.TextBox();
+            this.btnStop = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // BtnSearch
+            // btnSearch
             // 
-            this.BtnSearch.Location = new System.Drawing.Point(475, 84);
-            this.BtnSearch.Name = "BtnSearch";
-            this.BtnSearch.Size = new System.Drawing.Size(75, 23);
-            this.BtnSearch.TabIndex = 0;
-            this.BtnSearch.Text = "Поиск";
-            this.BtnSearch.UseVisualStyleBackColor = true;
-            this.BtnSearch.Click += new System.EventHandler(this.BtnSearch_Click);
+            this.btnSearch.Location = new System.Drawing.Point(475, 84);
+            this.btnSearch.Name = "btnSearch";
+            this.btnSearch.Size = new System.Drawing.Size(75, 23);
+            this.btnSearch.TabIndex = 0;
+            this.btnSearch.Text = "Поиск";
+            this.btnSearch.UseVisualStyleBackColor = true;
+            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
             // 
             // fbd
             // 
@@ -99,17 +101,37 @@
             this.textBoxSearchCount.TabIndex = 8;
             this.textBoxSearchCount.Text = "0";
             // 
+            // textBoxTime
+            // 
+            this.textBoxTime.Location = new System.Drawing.Point(450, 175);
+            this.textBoxTime.Name = "textBoxTime";
+            this.textBoxTime.Size = new System.Drawing.Size(100, 20);
+            this.textBoxTime.TabIndex = 9;
+            this.textBoxTime.Text = "0";
+            // 
+            // btnStop
+            // 
+            this.btnStop.Location = new System.Drawing.Point(475, 424);
+            this.btnStop.Name = "btnStop";
+            this.btnStop.Size = new System.Drawing.Size(75, 23);
+            this.btnStop.TabIndex = 10;
+            this.btnStop.Text = "Отмена";
+            this.btnStop.UseVisualStyleBackColor = true;
+            this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
+            // 
             // UserControlSearch
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.btnStop);
+            this.Controls.Add(this.textBoxTime);
             this.Controls.Add(this.textBoxSearchCount);
             this.Controls.Add(this.textBoxAllCount);
             this.Controls.Add(this.btnFolder);
             this.Controls.Add(this.treeViewSearch);
             this.Controls.Add(this.textBoxFolder);
             this.Controls.Add(this.textBoxRegex);
-            this.Controls.Add(this.BtnSearch);
+            this.Controls.Add(this.btnSearch);
             this.Name = "UserControlSearch";
             this.Size = new System.Drawing.Size(555, 450);
             this.ResumeLayout(false);
@@ -119,7 +141,7 @@
 
         #endregion
 
-        private System.Windows.Forms.Button BtnSearch;
+        private System.Windows.Forms.Button btnSearch;
         private System.Windows.Forms.FolderBrowserDialog fbd;
         private System.Windows.Forms.TextBox textBoxRegex;
         private System.Windows.Forms.TextBox textBoxFolder;
@@ -127,5 +149,7 @@
         private System.Windows.Forms.Button btnFolder;
         private System.Windows.Forms.TextBox textBoxAllCount;
         private System.Windows.Forms.TextBox textBoxSearchCount;
+        private System.Windows.Forms.TextBox textBoxTime;
+        private System.Windows.Forms.Button btnStop;
     }
 }
