@@ -51,49 +51,49 @@ namespace ControlArchiver
                 SizeConver(zipPath)
             );
             if (checkJson) CheckJson(folderPath, archiveInfo);
-            }
-            private static void CheckJson(string folderPath, ArchiveInfo archiveInfo)
+        }
+        private static void CheckJson(string folderPath, ArchiveInfo archiveInfo)
+        {
+            string archiveInfoPath = folderPath + $"{nameof(ArchiveInfo)}.json";
+            var jsonFormatter = new DataContractJsonSerializer(typeof(List<ArchiveInfo>));
+            using (var file = new FileStream(archiveInfoPath, FileMode.OpenOrCreate))
             {
-                string archiveInfoPath = folderPath + $"{nameof(ArchiveInfo)}.json";
-                var jsonFormatter = new DataContractJsonSerializer(typeof(List<ArchiveInfo>));
-                using (var file = new FileStream(archiveInfoPath, FileMode.OpenOrCreate))
+                jsonFormatter.WriteObject(file, archiveInfo);
+            }
+        }
+        public static string SizeConver(long sizeFiles)
+        {
+            string[] sizeletters = new string[] { "bytes", "KB", "MB", "GB", "TB" };
+            for (int i = 0; i < 5; i++)
+            {
+                if (sizeFiles < 1024)
                 {
-                    jsonFormatter.WriteObject(file, archiveInfo);
+                    string fileSize = sizeFiles.ToString() + sizeletters[i];
+                    return fileSize;
                 }
+                sizeFiles /= 1024;
             }
-            public static string SizeConver(long sizeFiles)
+            return "";
+        }
+        public static string SizeConver(string zipPath)
+        {
+            if (File.Exists(zipPath))
             {
+                FileInfo info = new FileInfo(zipPath);
+                long size = info.Length;
                 string[] sizeletters = new string[] { "bytes", "KB", "MB", "GB", "TB" };
                 for (int i = 0; i < 5; i++)
                 {
-                    if (sizeFiles < 1024)
+                    if (size < 1024)
                     {
-                        string fileSize = sizeFiles.ToString() + sizeletters[i];
+                        string fileSize = size.ToString() + sizeletters[i];
                         return fileSize;
                     }
-                    sizeFiles /= 1024;
+                    size /= 1024;
                 }
-                return "";
             }
-            public static string SizeConver(string zipPath)
-            {
-                if (File.Exists(zipPath))
-                {
-                    FileInfo info = new FileInfo(zipPath);
-                    long size = info.Length;
-                    string[] sizeletters = new string[] { "bytes", "KB", "MB", "GB", "TB" };
-                    for (int i = 0; i < 5; i++)
-                    {
-                        if (size < 1024)
-                        {
-                            string fileSize = size.ToString() + sizeletters[i];
-                            return fileSize;
-                        }
-                        size /= 1024;
-                    }
-                }
-                return "";
-            }
+            return "";
         }
     }
+}
 
