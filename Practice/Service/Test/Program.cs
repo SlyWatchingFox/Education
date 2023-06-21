@@ -20,7 +20,7 @@ namespace Test
 
             CheckForCron(cron, folderPath, archivePath);
 
-            
+
         }
 
         private static async void CheckForCron(string cron, string folderPath, string archivePath)
@@ -32,31 +32,12 @@ namespace Test
             string cronDay = crons[2];
             string cronMonth = crons[3];
             string cronDayOfWeek = crons[4];
-            if (cronMinute != "*")
-            {
-                if (cronMinute != dateTime.Minute.ToString()) return;
+            if (cronMinute != "*" && cronMinute != dateTime.Minute.ToString()) return;
+            if (cronHour != "*" && cronHour != dateTime.Hour.ToString()) return;
+            if (cronDay != "*" && cronDay != dateTime.Day.ToString()) return;
+            if (cronMonth != "*" && cronMonth != dateTime.Month.ToString()) return;
+            if (cronDayOfWeek != "*" && cronDayOfWeek == dateTime.DayOfWeek.ToString()) return;
 
-            }
-            if (cronHour != "*")
-            {
-                if (cronHour != dateTime.Hour.ToString()) return;
-
-            }
-            if (cronDay != "*")
-            {
-                if (cronDay != dateTime.Day.ToString()) return;
-
-            }
-            if (cronMonth != "*")
-            {
-                if (cronMonth != dateTime.Month.ToString()) return;
-
-            }
-            if (cronDayOfWeek != "*")
-            {
-                if (cronDayOfWeek == dateTime.DayOfWeek.ToString()) return;
-
-            }
 
             await CompressZipArchive.Compress(folderPath, archivePath);
             //CompressZipFile.Compress(folderPath, archivePath);
