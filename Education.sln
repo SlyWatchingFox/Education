@@ -299,7 +299,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Service", "Service", "{823D
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsServiceArchiver", "Practice\Service\WindowsServiceArchiver\WindowsServiceArchiver.csproj", "{9F23E2E0-4F6E-45F7-9EA7-181231CA6F90}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Practice\Service\Test\Test.csproj", "{650A071C-DD69-4642-B5D5-CC71AE073F7D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test", "Practice\Service\Test\Test.csproj", "{650A071C-DD69-4642-B5D5-CC71AE073F7D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

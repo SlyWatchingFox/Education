@@ -4,6 +4,8 @@ using System.IO.Compression;
 using System.ServiceProcess;
 using System.Threading.Tasks;
 using System.Text.Json;
+using System.Diagnostics;
+using System.Xml.Serialization;
 
 namespace WindowsServiceArchiver
 {
@@ -19,27 +21,54 @@ namespace WindowsServiceArchiver
             await Compress();
         }
 
+        interface IArchiver
+        {
+            Task Compress();
+        }
+
+
+
+
+
+
+
+
         private async Task Compress()
         {
+            while (!Debugger.IsAttached)
+            {
+                await Task.Delay(1000);
+            }
             try
             {
                 string folderPath;
+                string archivePath;
+                string archivingType;
+                string cron;
                 string programDataPath = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
                 string jsonPath = "ArchiverPath\\config.json";
                 string path = Path.Combine(programDataPath, jsonPath);
 
 
+                //Config config = new Config("E:\\test", "E:\\test", "ZipArchive", "*****");
+                //XmlSerializer xmlSerializer = new XmlSerializer(typeof(Config));
+                //using (FileStream fs = new FileStream("C:\\Users\\SlyWatchingFox\\source\\repos\\Education\\Practice\\Service\\WindowsServiceArchiver\\bin\\Debug\\config.xml", FileMode.OpenOrCreate))
+                //{
+                //    xmlSerializer.Serialize(fs, config);
+                //}
+
+                XmlSerializer xmlSerializer = new XmlSerializer(typeof(Config));
                 using (FileStream fs = new FileStream(path, FileMode.OpenOrCreate))
                 {
-                    Config config = await JsonSerializer.DeserializeAsync<Config>(fs);
-                    folderPath = config.Path;
+                    Config config = xmlSerializer.Deserialize(fs) as Config;
+                    folderPath = config.FolderPath;
+                    archivePath = config.ArchivePath + $".zip";
+                    archivingType = config.ArchivingType;
+                    cron = config.Cron;
                 }
 
-                //path = "C:\\Users\\SlyWatchingFox\\source\\repos\\Education\\Practice\\Service\\Test\\bin\\Debug\\net6.0\\path.txt";
-                //using (StreamReader reader = new StreamReader(path))
-                //{
-                //    folderPath = await reader.ReadLineAsync();
-                //}
+
+
 
 
                 if (string.IsNullOrEmpty(folderPath))
@@ -50,8 +79,7 @@ namespace WindowsServiceArchiver
                 if (directory.Exists)
                 {
                     FileInfo[] files = directory.GetFiles("*", SearchOption.AllDirectories);
-                    string zipPath = folderPath + $".zip";
-                    using (FileStream zipFile = File.Open(zipPath, FileMode.OpenOrCreate))
+                    using (FileStream zipFile = File.Open(archivePath, FileMode.OpenOrCreate))
                     {
                         using (ZipArchive archive = new ZipArchive(zipFile, ZipArchiveMode.Update))
                         {
@@ -71,4 +99,3 @@ namespace WindowsServiceArchiver
         }
     }
 }
-

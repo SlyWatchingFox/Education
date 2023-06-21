@@ -1,4 +1,6 @@
-﻿namespace WindowsServiceArchiver
+﻿
+
+namespace Test
 {
     public class Config
     {
