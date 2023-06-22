@@ -1,12 +1,19 @@
-﻿using System.IO.Compression;
+﻿using NLog;
+using System.IO.Compression;
 
 namespace Test
 {
-    internal class CompressZipFile
+    internal class CompressZipFile : IArchiver
     {
-        public static void Compress(string folderPath, string archivePath)
+        public async Task Compress(string folderPath, string archivePath)
         {
-            ZipFile.CreateFromDirectory(folderPath, archivePath);
+            try
+            {
+                Program.Logger.Info("Начало архивации");
+                await Task.Run(() => ZipFile.CreateFromDirectory(folderPath, archivePath));
+                Program.Logger.Info("Конец архивации");
+            }
+            catch (Exception ex) { Program.Logger.Info(ex, "Bitch"); }
         }
     }
 }

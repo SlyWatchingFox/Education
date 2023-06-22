@@ -1,32 +1,42 @@
-﻿using System.Xml.Serialization;
+﻿using NLog;
+using System.Xml.Serialization;
 
 namespace Test
 {
-
+    interface IArchiver
+    {
+        Task Compress(string folderPath, string archivePath);
+    }
     internal class Program
     {
+        private static Config? _config;
+        private static IArchiver? archiver;
+        public static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
+        private static double timerInter = 1000;
+        private static System.Timers.Timer timer = new System.Timers.Timer(timerInter);
         static async Task Main(string[] args)
         {
-            string folderPath;
-            string archivePath;
-            string archivingType;
-            string cron;
+            Console.WriteLine(timerInter);
+            var config = new NLog.Config.LoggingConfiguration();
+            var logfile = new NLog.Targets.FileTarget("logfile") { FileName = "logFile.txt" };
+            config.AddRule(LogLevel.Debug, LogLevel.Fatal, logfile);
+            NLog.LogManager.Configuration = config;
             string programDataPath = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
             string jsonPath = "ArchiverPath\\config.xml";
-            string path = Path.Combine(programDataPath, jsonPath);
-            Serialize(out folderPath, out archivePath, out archivingType, out cron, path);
-
-            System.Timers.Timer timer = new System.Timers.Timer(1000);
-
-            CheckForCron(cron, folderPath, archivePath);
-
-
+            string configPath = Path.Combine(programDataPath, jsonPath);
+            _config = Serialize(configPath);
+            archiver = ArchiverFactory.GetArchiver(_config.ArchivingType);
+            timer.Elapsed += CheckForCron;
+            timer.AutoReset = true;
+            timer.Start();
+            Console.ReadLine();
         }
-
-        private static async void CheckForCron(string cron, string folderPath, string archivePath)
+        private static async void CheckForCron(object? sender, System.Timers.ElapsedEventArgs e)
         {
-            string[] crons = cron.Split(new char[] { ' ' });
+            if (_config is null || archiver is null) return;
+            string[] crons = _config.Cron.Split(new char[] { ' ' });
             DateTime dateTime = DateTime.Now;
+            Console.WriteLine(dateTime.Month.ToString());
             string cronMinute = crons[0];
             string cronHour = crons[1];
             string cronDay = crons[2];
@@ -37,50 +47,37 @@ namespace Test
             if (cronDay != "*" && cronDay != dateTime.Day.ToString()) return;
             if (cronMonth != "*" && cronMonth != dateTime.Month.ToString()) return;
             if (cronDayOfWeek != "*" && cronDayOfWeek == dateTime.DayOfWeek.ToString()) return;
-
-
-            await CompressZipArchive.Compress(folderPath, archivePath);
-            //CompressZipFile.Compress(folderPath, archivePath);
+            await archiver.Compress(_config.FolderPath, _config.ArchivePath);
+            if (cronMinute == dateTime.Minute.ToString()) timerInter = 1000 * 60;
+            if (cronHour == dateTime.Hour.ToString()) timerInter = 1000 * 60 * 60;
+            if (cronDay == dateTime.Day.ToString()) timerInter = 1000 * 60 * 60 * 24;
+            if (cronDayOfWeek == dateTime.DayOfWeek.ToString()) timerInter = 1000 * 60 * 60 * 24;
+            if (cronMonth == dateTime.Month.ToString()) timerInter = 1000d * 60d * 60d * 24d * 30d;
         }
-
-
-
-
-
-
-        //interface IArchiver
-        //{
-        //    Task Compress();
-        //}
-
-
-
-
-
-
-        private static void Serialize(out string folderPath, out string archivePath, out string archivingType, out string cron, string path)
+        private static Config? Serialize(string configPath)
         {
-            XmlSerializer xmlSerializer = new XmlSerializer(typeof(Config));
-            using (FileStream fs = new FileStream(path, FileMode.OpenOrCreate))
+            Logger.Info("загрузка config " + configPath);
+            Config? config = null;
+            try
             {
-                Config? config = xmlSerializer.Deserialize(fs) as Config;
-                folderPath = config.FolderPath;
-                archivePath = config.ArchivePath + $".zip";
-                archivingType = config.ArchivingType;
-                cron = config.Cron;
+                XmlSerializer xmlSerializer = new XmlSerializer(typeof(Config));
+                using (FileStream fs = new FileStream(configPath, FileMode.OpenOrCreate))
+                {
+                    config = xmlSerializer.Deserialize(fs) as Config;
+                    if (config != null)
+                    {
+                        config.ArchivePath = config.ArchivePath + $".zip";
+                    }
+                }
+                Logger.Info("сonfig загружен");
+                Logger.Info("Folder Path - " + config.FolderPath);
+                Logger.Info("Archive Path - " + config.ArchivePath);
+                Logger.Info("Archiving Type - " + config.ArchivingType);
+                Logger.Info("cron - " + config.Cron);
             }
+            catch (Exception ex) { Program.Logger.Info(ex, "Bitch"); }
+            return config;
         }
-
-
-
-
-
-
-
-
-
-
-
     }
 }
 

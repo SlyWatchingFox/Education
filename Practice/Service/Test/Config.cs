@@ -1,6 +1,4 @@
-﻿
-
-namespace Test
+﻿namespace Test
 {
     public class Config
     {
