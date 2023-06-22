@@ -48,11 +48,13 @@ namespace Test
             if (cronMonth != "*" && cronMonth != dateTime.Month.ToString()) return;
             if (cronDayOfWeek != "*" && cronDayOfWeek == dateTime.DayOfWeek.ToString()) return;
             await archiver.Compress(_config.FolderPath, _config.ArchivePath);
-            if (cronMinute == dateTime.Minute.ToString()) timerInterval = 1000 * 60; timer.Interval = timerInterval;
-            if (cronHour == dateTime.Hour.ToString()) timerInterval = 1000 * 60 * 60; timer.Interval = timerInterval;
-            if (cronDay == dateTime.Day.ToString()) timerInterval = 1000 * 60 * 60 * 24; timer.Interval = timerInterval;
-            if (cronDayOfWeek == dateTime.DayOfWeek.ToString()) timerInterval = 1000 * 60 * 60 * 24; timer.Interval = timerInterval;
-            if (cronMonth == dateTime.Month.ToString()) timerInterval = 1000d * 60d * 60d * 24d * 30d; timer.Interval = timerInterval;
+            timerInterval = 1000;
+            if (cronMinute == dateTime.Minute.ToString()) timerInterval = 1000 * 60;
+            if (cronHour == dateTime.Hour.ToString()) timerInterval = 1000 * 60 * 60;
+            if (cronDay == dateTime.Day.ToString()) timerInterval = 1000 * 60 * 60 * 24;;
+            if (cronDayOfWeek == dateTime.DayOfWeek.ToString()) timerInterval = 1000 * 60 * 60 * 24;
+            if (cronMonth == dateTime.Month.ToString()) timerInterval = 1000d * 60d * 60d * 24d * 30d;
+            timer.Interval = timerInterval;
         }
         private static Config? Serialize(string configPath)
         {
