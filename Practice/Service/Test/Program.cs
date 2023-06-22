@@ -36,7 +36,6 @@ namespace Test
             if (_config is null || archiver is null) return;
             string[] crons = _config.Cron.Split(new char[] { ' ' });
             DateTime dateTime = DateTime.Now;
-            Console.WriteLine(dateTime.Month.ToString());
             string cronMinute = crons[0];
             string cronHour = crons[1];
             string cronDay = crons[2];
