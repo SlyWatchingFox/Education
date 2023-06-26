@@ -16,7 +16,6 @@ namespace Test
         private static System.Timers.Timer timer = new System.Timers.Timer(timerInterval);
         static async Task Main(string[] args)
         {
-            Console.WriteLine(timerInterval);
             var config = new NLog.Config.LoggingConfiguration();
             var logfile = new NLog.Targets.FileTarget("logfile") { FileName = "logFile.txt" };
             config.AddRule(LogLevel.Debug, LogLevel.Fatal, logfile);
@@ -27,7 +26,7 @@ namespace Test
             _config = Serialize(configPath);
             archiver = ArchiverFactory.GetArchiver(_config.ArchivingType);
             timer.Elapsed += CheckForCron;
-            timer.AutoReset = true;
+            timer.AutoReset = false;
             timer.Start();
             Console.ReadLine();
         }
@@ -37,27 +36,33 @@ namespace Test
             string[] crons = _config.Cron.Split(new char[] { ' ' });
             DateTime dateTime = DateTime.Now;
             string cronMinute = crons[0];
+            if (!int.TryParse(cronMinute, out _)) { Program.Logger.Info("Fucking cron"); Environment.Exit(1); }
             string cronHour = crons[1];
+            if (!int.TryParse(cronHour, out _)) { Program.Logger.Info("Fucking cron"); Environment.Exit(1); }
             string cronDay = crons[2];
+            if (!int.TryParse(cronDay, out _)) { Program.Logger.Info("Fucking cron"); Environment.Exit(1); }
             string cronMonth = crons[3];
+            if (!int.TryParse(cronMonth, out _)) { Program.Logger.Info("Fucking cron"); Environment.Exit(1); }
             string cronDayOfWeek = crons[4];
-            if (cronMinute != "*" && cronMinute != dateTime.Minute.ToString()) return;
-            if (cronHour != "*" && cronHour != dateTime.Hour.ToString()) return;
-            if (cronDay != "*" && cronDay != dateTime.Day.ToString()) return;
-            if (cronMonth != "*" && cronMonth != dateTime.Month.ToString()) return;
-            if (cronDayOfWeek != "*" && cronDayOfWeek == dateTime.DayOfWeek.ToString()) return;
+            if (!int.TryParse(cronDayOfWeek, out _)) { Program.Logger.Info("Fucking cron"); Environment.Exit(1); }
+            if (cronMinute != "*" && cronMinute != dateTime.Minute.ToString()) { timer.Start(); return; }
+            if (cronHour != "*" && cronHour != dateTime.Hour.ToString()) { timer.Start(); return; }
+            if (cronDay != "*" && cronDay != dateTime.Day.ToString()) { timer.Start(); return; }
+            if (cronMonth != "*" && cronMonth != dateTime.Month.ToString()) { timer.Start(); return; }
+            if (cronDayOfWeek != "*" && cronDayOfWeek == dateTime.DayOfWeek.ToString()) { timer.Start(); return; }
             await archiver.Compress(_config.FolderPath, _config.ArchivePath);
             timerInterval = 1000;
             if (cronMinute == dateTime.Minute.ToString()) timerInterval = 1000 * 60;
             if (cronHour == dateTime.Hour.ToString()) timerInterval = 1000 * 60 * 60;
-            if (cronDay == dateTime.Day.ToString()) timerInterval = 1000 * 60 * 60 * 24;;
+            if (cronDay == dateTime.Day.ToString()) timerInterval = 1000 * 60 * 60 * 24; ;
             if (cronDayOfWeek == dateTime.DayOfWeek.ToString()) timerInterval = 1000 * 60 * 60 * 24;
             if (cronMonth == dateTime.Month.ToString()) timerInterval = 1000d * 60d * 60d * 24d * 30d;
             timer.Interval = timerInterval;
+            timer.Start();
         }
         private static Config? Serialize(string configPath)
         {
-            Logger.Info("загрузка config " + configPath);
+            Logger.Info("Загрузка config " + configPath);
             Config? config = null;
             try
             {
@@ -70,7 +75,7 @@ namespace Test
                         config.ArchivePath = config.ArchivePath + $".zip";
                     }
                 }
-                Logger.Info("сonfig загружен");
+                Logger.Info("Config загружен");
                 Logger.Info("Folder Path - " + config.FolderPath);
                 Logger.Info("Archive Path - " + config.ArchivePath);
                 Logger.Info("Archiving Type - " + config.ArchivingType);
