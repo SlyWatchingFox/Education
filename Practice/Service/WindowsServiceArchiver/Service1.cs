@@ -42,8 +42,7 @@ namespace WindowsServiceArchiver
         }
         private async void CheckForCron(object sender, System.Timers.ElapsedEventArgs e)
         {
-            string regexPattern = @"^[*,0,1,2,3,4,5,6,7,8,9]\d*\s[*,0,1,2,3,4,5,6,7,8,9]\d*\s[*,1,2,3,4,5,6,7,8,9]\d*\s" +
-                                 @"[*,1,2,3,4,5,6,7,8,9]\d*\s[*,0,1,2,3,4,5,6]";
+            string regexPattern = @"^[*\d]*\s[*\d]*\s[*\d]*\s[*\d]*\s[*\d]*";
             if (!Regex.IsMatch(_config.Cron, regexPattern, RegexOptions.IgnoreCase)) { Logger.Info("Fucking cron"); Environment.Exit(1); }
             if (_config is null || _archiver is null) return;
             string[] crons = _config.Cron.Split(new char[] { ' ' });
