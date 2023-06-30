@@ -32,8 +32,8 @@ namespace WindowsServiceArchiver
             config.AddRule(LogLevel.Debug, LogLevel.Fatal, logfile);
             NLog.LogManager.Configuration = config;
             string programDataPath = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
-            string jsonPath = "ArchiverPath\\config.xml";
-            string configPath = Path.Combine(programDataPath, jsonPath);
+            string xmlPath = "ArchiverPath\\config.xml";
+            string configPath = Path.Combine(programDataPath, xmlPath);
             _config = Serialize(configPath);
             _archiver = ArchiverFactory.GetArchiver(_config.ArchivingType);
             _timer.Elapsed += CheckForCron;
@@ -42,7 +42,7 @@ namespace WindowsServiceArchiver
         }
         private async void CheckForCron(object sender, System.Timers.ElapsedEventArgs e)
         {
-            string regexPattern = @"^[*\d]*\s[*\d]*\s[*\d]*\s[*\d]*\s[*\d]*";
+            string regexPattern = @"^(\*|[1-5]?\d)\s(\*|[1]?\d|[2][0-3])\s(\*|[3][0-1]|[1-2]\d|[1-9])\s(\*|[1][0-2]|[1-9])\s([*0-6])$";
             if (!Regex.IsMatch(_config.Cron, regexPattern, RegexOptions.IgnoreCase)) { Logger.Info("Fucking cron"); Environment.Exit(1); }
             if (_config is null || _archiver is null) return;
             string[] crons = _config.Cron.Split(new char[] { ' ' });
@@ -77,10 +77,6 @@ namespace WindowsServiceArchiver
                 using (FileStream fs = new FileStream(configPath, FileMode.OpenOrCreate))
                 {
                     config = xmlSerializer.Deserialize(fs) as Config;
-                    if (config != null)
-                    {
-                        config.ArchivePath = config.ArchivePath + $".zip";
-                    }
                 }
                 Logger.Info("Config загружен");
                 Logger.Info("Folder Path - " + config.FolderPath);

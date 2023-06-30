@@ -12,13 +12,14 @@ namespace WindowsServiceArchiver
             try
             {
                 if (string.IsNullOrEmpty(folderPath)) return;
+                Service1.Logger.Info("Начало архивации");
+                var directory = new DirectoryInfo(folderPath);
+                archivePath = archivePath + "\\" + directory.Name + $".zip";
                 if (File.Exists(archivePath))
                 {
                     Service1.Logger.Info("Архив существует");
                     return;
                 }
-                Service1.Logger.Info("Начало архивации");
-                var directory = new DirectoryInfo(folderPath);
                 if (directory.Exists)
                 {
                     FileInfo[] files = directory.GetFiles("*", SearchOption.AllDirectories);
