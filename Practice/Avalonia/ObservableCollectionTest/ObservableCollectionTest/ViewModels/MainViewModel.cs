@@ -9,11 +9,12 @@ public class MainViewModel : ViewModelBase
     public string Item
     {
         get => _item;
-        set => _item = value;
+        set => this.RaiseAndSetIfChanged(ref _item, value);
     }
     public ObservableCollection<string> MyItems { get; set; } = new ObservableCollection<string>();
     public void AddItem()
     {
         MyItems.Add(Item);
+        Item = "";
     }
 }
