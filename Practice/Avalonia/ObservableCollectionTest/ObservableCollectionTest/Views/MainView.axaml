@@ -11,20 +11,34 @@
 		 to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
 		<vm:MainViewModel />
 	</Design.DataContext>
-	<Grid ColumnDefinitions="Auto,Auto" RowDefinitions="Auto,Auto"  Margin="4">
+	<Grid ColumnDefinitions="Auto,Auto,Auto" RowDefinitions="Auto,Auto"  Margin="4">
 		<TextBox
-			Text="{Binding Item}"
+			Text="{Binding Name}"
 			Grid.Row="0"
 			Grid.Column="0"/>
+		<TextBox
+			Text="{Binding Age}"
+			Grid.Row="0"
+			Grid.Column="1"/>
 		<Button
 			Content="Добавить"
 			Grid.Row="0" 
-			Grid.Column="1"
-			Command="{Binding AddItem}"/>
-		<ListBox 
+			Grid.Column="2"
+			Command="{Binding AddPerson}"/>
+		<ListBox ItemsSource="{Binding Persons}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
+			<ListBox.ItemTemplate>
+				<DataTemplate>
+					<StackPanel Orientation="Horizontal">
+						<TextBlock Text="{Binding Name}" Margin="0,0,10,0"/>
+						<TextBlock Text="{Binding Age}"/>
+					</StackPanel>
+				</DataTemplate>
+			</ListBox.ItemTemplate>
+		</ListBox>
+	<!--<ListBox 
 			ItemsSource="{Binding MyItems}"
 			Grid.Row="1"
 			Grid.Column="0"
-			Grid.ColumnSpan="2"/>
+			Grid.ColumnSpan="2"/>-->
 	</Grid>
 </UserControl>
